@@ -1,21 +1,16 @@
 @import "src/@fuse/scss/fuse";
 
 fuse-sidebar {
-
     &.navbar-fuse-sidebar {
         overflow: hidden;
 
         &.folded:not(.unfolded) {
-
             navbar {
-
                 navbar-vertical-style-2 {
-
                     .navbar-header {
                         padding: 0 13px;
 
                         .logo {
-
                             .logo-text {
                                 opacity: 0;
                                 transition: opacity 200ms ease;
@@ -29,7 +24,6 @@ fuse-sidebar {
 }
 
 navbar {
-
     &.vertical-style-2 {
         display: flex;
         flex-direction: column;
@@ -38,9 +32,7 @@ navbar {
         height: 100%;
 
         &.right-navbar {
-
             .toggle-sidebar-opened {
-
                 mat-icon {
                     transform: rotate(180deg);
                 }
@@ -69,7 +61,7 @@ navbar {
                 align-items: center;
 
                 .logo-icon {
-                    width: 130px;
+                    width: 100px;
                     height: 50px;
                 }
 
@@ -87,6 +79,5 @@ navbar {
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
-
     }
 }
