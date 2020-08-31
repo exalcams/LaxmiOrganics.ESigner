@@ -30,9 +30,7 @@ export class DialogComponent implements OnInit {
     AllCertificates: CertificateClass[] = [];
     CurrentDSSConfiguration: DSSConfiguration[] = [];
     // OutputTypeList:string[]=['ZWOR','ZWOL','ZFLX','ZOTC','ZRMG','ZDN1','ZDN2','ZDN4','ZJOB','ZBWD','ZSRP','ZD07','ZD08','ZSTO','ZST1','ZCR1','ZCR2','RD00'];
-    OutputTypeList=[{SelectOutPutType:'ZWOR'},{SelectOutPutType:'ZWOL'},{SelectOutPutType:'ZOTC'},{SelectOutPutType:'ZRMG'},{SelectOutPutType:'ZDN1'},{SelectOutPutType:'ZDN2'},
-    {SelectOutPutType:'ZDN4'},{SelectOutPutType:'ZJOB'},{SelectOutPutType:'ZBWD'},{SelectOutPutType:'ZSRP'},{SelectOutPutType:'ZD07'},{SelectOutPutType:'ZD08'},
-    {SelectOutPutType:'ZSTO'},{SelectOutPutType:'ZST1'},{SelectOutPutType:'ZCR1'},{SelectOutPutType:'ZCR2'},{SelectOutPutType:'RD00'},{SelectOutPutType:'ZFLX'}];
+    OutputTypeList = [{ SelectOutPutType: 'INV' }, { SelectOutPutType: 'CRDR' }];
     selectedDocumentType: string;
     // SelectOutPutType: string;
     constructor(
@@ -45,7 +43,7 @@ export class DialogComponent implements OnInit {
     ) {
         // Set the defaults
         this.ConfigurationFormGroup = this.formBuilder.group({
-            // AutoSign: ['', Validators.required],
+            AutoSign: ['', Validators.required],
             DocumentType: ['', Validators.required],
             Config1: ['', Validators.required],
             Config2: ['', Validators.required],
@@ -53,7 +51,7 @@ export class DialogComponent implements OnInit {
             Authority: ['', Validators.required],
             CertificateName: ['', Validators.required],
             ExpiryDate: ['', Validators.required],
-            DisplayTitle1: ['', Validators.required],
+            DisplayTitle1: [''],
             DisplayTitle2: ['']
         });
         // this.CurrentDSSConfiguration = new DSSConfiguration();
@@ -68,12 +66,12 @@ export class DialogComponent implements OnInit {
     ngOnInit(): void {
         this.GetAllCertificateFromStore();
         this.GetAllAuthoritys();
-       // console.log(this.DSSConfigurationData);
+        // console.log(this.DSSConfigurationData);
         if (this.DSSConfigurationData) {
             this.ConfigurationFormGroup.setValue({
-                // AutoSign: this.DSSConfigurationData.AUTOSIGN ? '1' : '0',
+                 AutoSign: this.DSSConfigurationData.AUTOSIGN ? '1' : '0',
                 // SignedAuthority: this.DSSConfigurationData.AUTHORITY,
-                DocumentType: this.DSSConfigurationData.CONFIG1,
+                DocumentType: this.DSSConfigurationData.DOCTYPE,
                 Config1: this.DSSConfigurationData.CONFIG1,
                 Config2: this.DSSConfigurationData.CONFIG2,
                 Config3: this.DSSConfigurationData.CONFIG3,
@@ -117,7 +115,7 @@ export class DialogComponent implements OnInit {
     }
 
     SignedAuthoritySelected(SignedAuthority: string): void {
-       // console.log(SignedAuthority);
+        // console.log(SignedAuthority);
         const res = this.AllAuthority.filter(x => x.UserName === SignedAuthority)[0];
         if (res) {
         }
@@ -175,12 +173,12 @@ export class DialogComponent implements OnInit {
     YesClicked(): void {
         if (this.ConfigurationFormGroup.valid) {
             const expDate = this.datepipe.transform(this.ConfigurationFormGroup.get('ExpiryDate').value, 'dd-MM-yyyy');
-            // this.DSSConfigurationData.DOCTYPE = this.ConfigurationFormGroup.get('DocumentType').value;
+            this.DSSConfigurationData.DOCTYPE = this.ConfigurationFormGroup.get('DocumentType').value;
             // this.DSSConfigurationData.Plant_ID = this.ConfigurationFormGroup.get('Plant').value;
             this.DSSConfigurationData.CONFIG1 = this.ConfigurationFormGroup.get('Config1').value;
             this.DSSConfigurationData.CONFIG2 = this.ConfigurationFormGroup.get('Config2').value;
             this.DSSConfigurationData.CONFIG3 = this.ConfigurationFormGroup.get('Config3').value;
-            this.DSSConfigurationData.AUTOSIGN = true;
+            this.DSSConfigurationData.AUTOSIGN = this.ConfigurationFormGroup.get('AutoSign').value;
             // this.DSSConfigurationData.AUTHORITY = this.ConfigurationFormGroup.get('SignedAuthority').value;
 
             this.DSSConfigurationData.CERT_NAME = this.ConfigurationFormGroup.get('CertificateName').value;
@@ -201,6 +199,6 @@ export class DialogComponent implements OnInit {
         this.matDialogRef.close(null);
     }
     GetDocumentType(documentType: string): void {
-        this.ConfigurationFormGroup.controls['Config1'].setValue(documentType);
+        this.ConfigurationFormGroup.controls['Config3'].setValue(documentType);
     }
 }
