@@ -69,7 +69,8 @@ export class DialogComponent implements OnInit {
         // console.log(this.DSSConfigurationData);
         if (this.DSSConfigurationData) {
             this.ConfigurationFormGroup.setValue({
-                 AutoSign: this.DSSConfigurationData.AUTOSIGN ? '1' : '0',
+                // AutoSign: this.DSSConfigurationData.AUTOSIGN,
+                AutoSign: this.DSSConfigurationData.AUTOSIGN ? '1' : '0',
                 // SignedAuthority: this.DSSConfigurationData.AUTHORITY,
                 DocumentType: this.DSSConfigurationData.DOCTYPE,
                 Config1: this.DSSConfigurationData.CONFIG1,
@@ -178,7 +179,7 @@ export class DialogComponent implements OnInit {
             this.DSSConfigurationData.CONFIG1 = this.ConfigurationFormGroup.get('Config1').value;
             this.DSSConfigurationData.CONFIG2 = this.ConfigurationFormGroup.get('Config2').value;
             this.DSSConfigurationData.CONFIG3 = this.ConfigurationFormGroup.get('Config3').value;
-            this.DSSConfigurationData.AUTOSIGN = this.ConfigurationFormGroup.get('AutoSign').value;
+            this.DSSConfigurationData.AUTOSIGN = this.ConfigurationFormGroup.get('AutoSign').value === '1' ? true : false;
             // this.DSSConfigurationData.AUTHORITY = this.ConfigurationFormGroup.get('SignedAuthority').value;
 
             this.DSSConfigurationData.CERT_NAME = this.ConfigurationFormGroup.get('CertificateName').value;
